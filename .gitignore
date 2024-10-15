@@ -102,3 +102,6 @@ package-lock.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# astro
+**/.astro/settings.json
