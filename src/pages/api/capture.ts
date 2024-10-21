@@ -1,6 +1,6 @@
 import { type APIRoute } from 'astro';
 import puppeteer from 'puppeteer-core';
-import Chromium from 'chrome-aws-lambda';
+import {chromium} from 'chrome-aws-lambda';
 
 const exePath =
   process.platform === "win32"
@@ -15,11 +15,11 @@ const Localoptions = {
         headless: true,
     };
 const serverOptions = {
-    headless: true,
-    args: Chromium.args,
-    executablePath: exePath,
+    args: chromium.args,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
 }
-    
+
 export const POST: APIRoute = async ({ request, url }) => {
 
     const isDev = url.searchParams.get('dev') === "true";
