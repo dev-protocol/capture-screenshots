@@ -26,7 +26,7 @@ const serverOptions = {
 	headless: true,
 }
 
-export const POST: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url }) => {
 	const isDev = url.searchParams.get('dev') === 'true'
 	const options = isDev ? Localoptions : serverOptions
 
