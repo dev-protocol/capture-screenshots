@@ -1,7 +1,7 @@
 /* eslint-disable functional/no-expression-statements */
 import { type APIRoute } from 'astro'
 import puppeteer from 'puppeteer-core'
-import chromium from 'chrome-aws-lambda'
+import chromium from "@sparticuz/chromium-min";
 
 const exePath =
 	process.platform === 'win32'
@@ -10,6 +10,11 @@ const exePath =
 			? '/usr/bin/google-chrome'
 			: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
+
+
+const chromiumPack = "https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar"
+
+
 const Localoptions = {
 	args: [],
 	executablePath: exePath,
@@ -17,11 +22,11 @@ const Localoptions = {
 }
 const serverOptions = {
 	args: chromium.args,
-	executablePath: await chromium.executablePath,
-	headless: chromium.headless,
+	executablePath: await chromium.executablePath(chromiumPack),
+	headless: true,
 }
 
-export const POST: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url }) => {
 	const isDev = url.searchParams.get('dev') === 'true'
 	const options = isDev ? Localoptions : serverOptions
 
@@ -64,6 +69,8 @@ export const POST: APIRoute = async ({ url }) => {
 			status: 200,
 			headers: {
 				'Content-Type': 'image/png',
+                'access-control-allow-origin': '*',
+                'cache-control': `public, max-age=31536000`,
 			},
 		})
 	} catch (error) {
