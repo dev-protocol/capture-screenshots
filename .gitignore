@@ -43,6 +43,9 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
+# vercel build output
+.vercel
+
 # Optional npm cache directory
 .npm
 
