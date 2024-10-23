@@ -1,7 +1,7 @@
 /* eslint-disable functional/no-expression-statements */
 import { type APIRoute } from 'astro'
-import puppeteer from 'puppeteer-core'
-import chromium from "@sparticuz/chromium-min";
+import chromium from '@sparticuz/chromium-min'
+import { Chromium } from '../../libs/chromium.ts'
 
 const exePath =
 	process.platform === 'win32'
@@ -10,10 +10,8 @@ const exePath =
 			? '/usr/bin/google-chrome'
 			: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-
-
-const chromiumPack = "https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar"
-
+const chromiumPack =
+	'https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar'
 
 const Localoptions = {
 	args: [],
@@ -43,7 +41,7 @@ export const GET: APIRoute = async ({ url }) => {
 			return new Response('Invalid URL format', { status: 400 })
 		}
 
-		const browser = await puppeteer.launch(options)
+		const browser = await Chromium.getInstance(options)
 		const page = await browser.newPage()
 
 		// set the viewport size
@@ -62,15 +60,16 @@ export const GET: APIRoute = async ({ url }) => {
 		})
 
 		// close the browser
-		await browser.close()
+		// to reuse the instance, now commented out.
+		// await browser.close()
 
 		// Return the PNG image as the response
 		return new Response(file, {
 			status: 200,
 			headers: {
 				'Content-Type': 'image/png',
-                'access-control-allow-origin': '*',
-                'cache-control': `public, max-age=31536000`,
+				'access-control-allow-origin': '*',
+				'cache-control': `public, max-age=31536000`,
 			},
 		})
 	} catch (error) {
