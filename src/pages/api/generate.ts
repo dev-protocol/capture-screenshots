@@ -25,7 +25,11 @@ const serverOptions = {
 }
 
 export const GET: APIRoute = async ({ url }) => {
-	const isDev = url.searchParams.get('dev') === 'true'
+	const { isDev, height, width } = {
+		isDev: url.searchParams.get('dev') === 'true',
+		height: url.searchParams.get('h'),
+		width: url.searchParams.get('w')
+	};
 	const options = isDev ? Localoptions : serverOptions
 
 	try {
@@ -46,8 +50,8 @@ export const GET: APIRoute = async ({ url }) => {
 
 		// set the viewport size
 		await page.setViewport({
-			width: 1920,
-			height: 1080,
+			width: width ? Math.abs(parseInt(width)) : 1920,
+			height: height ? Math.abs(parseInt(height)) : 1080,
 			deviceScaleFactor: 1,
 		})
 
