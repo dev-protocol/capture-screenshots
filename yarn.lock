@@ -1135,13 +1135,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sparticuz/chromium-min@npm:^130.0.0":
-  version: 130.0.0
-  resolution: "@sparticuz/chromium-min@npm:130.0.0"
+"@sparticuz/chromium-min@npm:^131.0.0":
+  version: 131.0.0
+  resolution: "@sparticuz/chromium-min@npm:131.0.0"
   dependencies:
     follow-redirects: "npm:^1.15.9"
     tar-fs: "npm:^3.0.6"
-  checksum: 10c0/4d52a326b1cf57eef666f1f442fc57a759ce26b9e5198d2c924fd66c466fa6c0096f59cbbc694beee8c1c43057d43a9a5da9cfbd41b5f3c44ba24bc72b386ffa
+  checksum: 10c0/a33303c8cefb3a48e4a0d83deec8b807c0f7403c42d04c49b9f8f810a94423becc21cec20ba875e58e6659ba2997976fb92830efa0f2b0f5b8b50246f43a36bd
   languageName: node
   linkType: hard
 
@@ -6237,7 +6237,7 @@ __metadata:
     "@astrojs/vercel": "npm:^7.8.2"
     "@devprotocol/util-ts": "npm:^4.0.0"
     "@eslint/js": "npm:^9.12.0"
-    "@sparticuz/chromium-min": "npm:^130.0.0"
+    "@sparticuz/chromium-min": "npm:^131.0.0"
     "@types/dotenv": "npm:8.2.3"
     "@types/eslint-config-prettier": "npm:^6.11.3"
     "@types/eslint__js": "npm:^8.42.3"

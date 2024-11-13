@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@astrojs/vercel": "^7.8.2",
 		"@devprotocol/util-ts": "^4.0.0",
-		"@sparticuz/chromium-min": "^130.0.0",
+		"@sparticuz/chromium-min": "^131.0.0",
 		"astro": "^4.16.3",
 		"puppeteer-core": "23.6.0",
 		"ramda": "0.30.1"
