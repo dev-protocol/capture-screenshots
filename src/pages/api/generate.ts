@@ -25,10 +25,11 @@ const serverOptions = {
 }
 
 export const GET: APIRoute = async ({ url }) => {
-	const { isDev, height, width } = {
+	const { isDev, height, width, cacheControl } = {
 		isDev: url.searchParams.get('dev') === 'true',
 		height: url.searchParams.get('h'),
 		width: url.searchParams.get('w'),
+		cacheControl: url.searchParams.get('cache-control'),
 	}
 	const options = isDev ? Localoptions : serverOptions
 
@@ -73,7 +74,7 @@ export const GET: APIRoute = async ({ url }) => {
 			headers: {
 				'Content-Type': 'image/png',
 				'access-control-allow-origin': '*',
-				'cache-control': `public, max-age=31536000`,
+				'cache-control': cacheControl ?? `public, max-age=31536000`,
 			},
 		})
 	} catch (error) {

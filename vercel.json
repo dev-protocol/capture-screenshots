@@ -1,0 +1,8 @@
+{
+	"crons": [
+		{
+			"path": "/api/generate?cache-control=no-cache&src=https://example.com/",
+			"schedule": "*/5 * * * *"
+		}
+	]
+}
