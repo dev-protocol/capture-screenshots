@@ -28,8 +28,8 @@ export const GET: APIRoute = async ({ url }) => {
 	const { isDev, height, width } = {
 		isDev: url.searchParams.get('dev') === 'true',
 		height: url.searchParams.get('h'),
-		width: url.searchParams.get('w')
-	};
+		width: url.searchParams.get('w'),
+	}
 	const options = isDev ? Localoptions : serverOptions
 
 	try {
