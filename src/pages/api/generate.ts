@@ -2,6 +2,10 @@
 import { type APIRoute } from 'astro'
 import chromium from '@sparticuz/chromium-min'
 import { Chromium } from '../../libs/chromium.ts'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+import puppeteer from 'puppeteer-extra'
+
+puppeteer.use(StealthPlugin())
 
 const exePath =
 	process.platform === 'win32'
@@ -56,8 +60,13 @@ export const GET: APIRoute = async ({ url }) => {
 			deviceScaleFactor: 1,
 		})
 
+		await page.setUserAgent(
+			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+			  '(KHTML, like Gecko) Chrome/109.0.5414.74 Safari/537.36'
+		)
+
 		// tell the page to visit the url
-		await page.goto(targetUrl)
+		await page.goto(targetUrl, { waitUntil: 'networkidle2' })
 
 		// take a screenshot
 		const file = await page.screenshot({
