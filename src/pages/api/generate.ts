@@ -1,93 +1,77 @@
 /* eslint-disable functional/no-expression-statements */
 import { type APIRoute } from 'astro'
-import chromium from '@sparticuz/chromium-min'
-import { Chromium } from '../../libs/chromium.ts'
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import puppeteer from 'puppeteer-extra'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 
+// Use the stealth plugin to avoid bot detection
 puppeteer.use(StealthPlugin())
 
-const exePath =
-	process.platform === 'win32'
-		? 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe'
-		: process.platform === 'linux'
-			? '/usr/bin/google-chrome'
-			: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-
-const chromiumPack =
-	'https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar'
-
-const Localoptions = {
-	args: [],
-	executablePath: exePath,
-	headless: true,
-}
-const serverOptions = {
-	args: chromium.args,
-	executablePath: await chromium.executablePath(chromiumPack),
-	headless: true,
-}
-
 export const GET: APIRoute = async ({ url }) => {
-	const { isDev, height, width, cacheControl } = {
-		isDev: url.searchParams.get('dev') === 'true',
-		height: url.searchParams.get('h'),
-		width: url.searchParams.get('w'),
-		cacheControl: url.searchParams.get('cache-control'),
-	}
-	const options = isDev ? Localoptions : serverOptions
+  // Extract query parameters
+  const isDev = url.searchParams.get('dev') === 'true'
+  const heightParam = url.searchParams.get('h')
+  const widthParam = url.searchParams.get('w')
+  const cacheControl = url.searchParams.get('cache-control')
+  const targetUrl = url.searchParams.get('src')
 
-	try {
-		// Extract the "target" query parameter (the URL to capture)
-		const targetUrl = url.searchParams.get('src')
+  // Basic error checks
+  if (!targetUrl) {
+    return new Response('URL query parameter (src) is required', { status: 400 })
+  }
+  if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+    return new Response('Invalid URL format', { status: 400 })
+  }
 
-		if (!targetUrl) {
-			return new Response('URL query parameter is required', { status: 400 })
-		}
+  // Convert width/height strings to numbers
+  const width = widthParam ? Math.abs(parseInt(widthParam, 10)) : 1920
+  const height = heightParam ? Math.abs(parseInt(heightParam, 10)) : 1080
 
-		// Validate that the URL starts with http or https
-		if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-			return new Response('Invalid URL format', { status: 400 })
-		}
+  try {
+    // Launch Puppeteer
+    const browser = await puppeteer.launch({
+      // If you need to debug locally, set headless to false
+      // But by default it's safer to keep headless: true
+      headless: true,
+      // Possibly set args like:
+      // args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
 
-		const browser = await Chromium.getInstance(options)
-		const page = await browser.newPage()
+    // Create a new page
+    const page = await browser.newPage()
 
-		// set the viewport size
-		await page.setViewport({
-			width: width ? Math.abs(parseInt(width)) : 1920,
-			height: height ? Math.abs(parseInt(height)) : 1080,
-			deviceScaleFactor: 1,
-		})
+    // Optional: set your viewport
+    await page.setViewport({
+      width,
+      height,
+      deviceScaleFactor: 1,
+    })
 
-		await page.setUserAgent(
-			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-			  '(KHTML, like Gecko) Chrome/109.0.5414.74 Safari/537.36'
-		)
+    // Optional: set a realistic user-agent
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+        '(KHTML, like Gecko) Chrome/109.0.5414.74 Safari/537.36'
+    )
 
-		// tell the page to visit the url
-		await page.goto(targetUrl, { waitUntil: 'networkidle2' })
+    // Navigate
+    await page.goto(targetUrl, { waitUntil: 'networkidle2' })
 
-		// take a screenshot
-		const file = await page.screenshot({
-			type: 'png',
-		})
+    // Capture a screenshot
+    const file = await page.screenshot({ type: 'png' })
 
-		// close the browser
-		// to reuse the instance, now commented out.
-		// await browser.close()
+    // Close the browser (optional, but recommended)
+    await browser.close()
 
-		// Return the PNG image as the response
-		return new Response(file, {
-			status: 200,
-			headers: {
-				'Content-Type': 'image/png',
-				'access-control-allow-origin': '*',
-				'cache-control': cacheControl ?? `public, max-age=31536000`,
-			},
-		})
-	} catch (error) {
-		console.error('Error capturing screenshot:', error)
-		return new Response('Internal Server Error', { status: 500 })
-	}
+    // Return the screenshot as a PNG
+    return new Response(file, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'access-control-allow-origin': '*',
+        'cache-control': cacheControl ?? 'public, max-age=31536000',
+      },
+    })
+  } catch (error) {
+    console.error('Error capturing screenshot:', error)
+    return new Response('Internal Server Error', { status: 500 })
+  }
 }
