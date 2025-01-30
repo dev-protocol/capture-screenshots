@@ -20,6 +20,7 @@
 		"@devprotocol/util-ts": "^4.0.0",
 		"@sparticuz/chromium-min": "^130.0.0",
 		"astro": "5.1.10",
+		"puppeteer": "^24.1.1",
 		"puppeteer-core": "23.6.0",
 		"puppeteer-extra": "^3.3.6",
 		"puppeteer-extra-plugin-stealth": "^2.11.2",
