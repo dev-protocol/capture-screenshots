@@ -445,13 +445,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sparticuz/chromium-min@npm:^130.0.0":
-  version: 130.0.0
-  resolution: "@sparticuz/chromium-min@npm:130.0.0"
+"@sparticuz/chromium@npm:^132.0.0":
+  version: 132.0.0
+  resolution: "@sparticuz/chromium@npm:132.0.0"
   dependencies:
     follow-redirects: "npm:^1.15.9"
-    tar-fs: "npm:^3.0.6"
-  checksum: 10c0/4d52a326b1cf57eef666f1f442fc57a759ce26b9e5198d2c924fd66c466fa6c0096f59cbbc694beee8c1c43057d43a9a5da9cfbd41b5f3c44ba24bc72b386ffa
+    tar-fs: "npm:^3.0.8"
+  checksum: 10c0/7c9a0bfa1d2485741bc1faf1f048635f4927f8971735e8c1ad397a9f31f892841da5b064bdfa8cc3639d3e13ef8cb12ffd0cf5e358d7828146eb2b84a615a2d6
   languageName: node
   linkType: hard
 
@@ -984,10 +984,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bare-fs@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "bare-fs@npm:4.0.1"
+  dependencies:
+    bare-events: "npm:^2.0.0"
+    bare-path: "npm:^3.0.0"
+    bare-stream: "npm:^2.0.0"
+  checksum: 10c0/db2f4e2646faa011e322cbdc4615fe0cac865a03c2f76d7c686eccf96b0b5eea2bc71dfa37e8cfb14f4f61f8cd3ca95ff7b745d37c55fca319e40ec351d4ae0c
+  languageName: node
+  linkType: hard
+
 "bare-os@npm:^2.1.0":
   version: 2.4.4
   resolution: "bare-os@npm:2.4.4"
   checksum: 10c0/e7d1a7b2100c05da8d25b60d0d48cf850c6f57064577a3f2f51cf18d417fbcfd6967ed2d8314320914ed69e0f2ebcf54eb1b36092dd172d8e8f969cf8cccf041
+  languageName: node
+  linkType: hard
+
+"bare-os@npm:^3.0.1":
+  version: 3.4.0
+  resolution: "bare-os@npm:3.4.0"
+  checksum: 10c0/2d1a4467ef8aff0a13d738e549aac30bbecf7631721f7099de78d6f8fc0ced9334ab391e489de28d69809f788f64081ac25108303a9a9e122f9bf87a8d589025
   languageName: node
   linkType: hard
 
@@ -997,6 +1015,15 @@ __metadata:
   dependencies:
     bare-os: "npm:^2.1.0"
   checksum: 10c0/35587e177fc8fa5b13fb90bac8779b5ce49c99016d221ddaefe2232d02bd4295d79b941e14ae19fda75ec42a6fe5fb66c07d83ae7ec11462178e66b7be65ca74
+  languageName: node
+  linkType: hard
+
+"bare-path@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "bare-path@npm:3.0.0"
+  dependencies:
+    bare-os: "npm:^3.0.1"
+  checksum: 10c0/56a3ca82a9f808f4976cb1188640ac206546ce0ddff582afafc7bd2a6a5b31c3bd16422653aec656eeada2830cfbaa433c6cbf6d6b4d9eba033d5e06d60d9a68
   languageName: node
   linkType: hard
 
@@ -3333,6 +3360,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tar-fs@npm:^3.0.8":
+  version: 3.0.8
+  resolution: "tar-fs@npm:3.0.8"
+  dependencies:
+    bare-fs: "npm:^4.0.1"
+    bare-path: "npm:^3.0.0"
+    pump: "npm:^3.0.0"
+    tar-stream: "npm:^3.1.5"
+  dependenciesMeta:
+    bare-fs:
+      optional: true
+    bare-path:
+      optional: true
+  checksum: 10c0/b70bb2ad0490ab13b48edd10bd648bb54c52b681981cdcdc3aa4517e98ad94c94659ddca1925872ee658d781b9fcdd2b1c808050647f06b1bca157dd2fcae038
+  languageName: node
+  linkType: hard
+
 "tar-stream@npm:^3.1.5":
   version: 3.1.7
   resolution: "tar-stream@npm:3.1.7"
@@ -3368,7 +3412,7 @@ __metadata:
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^16.0.0"
     "@rollup/plugin-typescript": "npm:^12.1.2"
-    "@sparticuz/chromium-min": "npm:^130.0.0"
+    "@sparticuz/chromium": "npm:^132.0.0"
     "@types/aws-lambda": "npm:^8.10.147"
     "@types/dotenv": "npm:8.2.3"
     "@types/eslint-config-prettier": "npm:^6.11.3"

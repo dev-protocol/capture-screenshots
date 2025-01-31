@@ -1,7 +1,7 @@
 /* eslint-disable functional/no-expression-statements */
 import type { Handler } from 'aws-lambda'
 import type { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda'
-import chromium from '@sparticuz/chromium-min'
+import chromium from '@sparticuz/chromium'
 import { Chromium } from './libs/chromium.js'
 import type { PuppeteerLifeCycleEvent } from 'puppeteer-core'
 
@@ -12,24 +12,16 @@ const exePath =
 			? '/usr/bin/google-chrome'
 			: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
-const chromiumPack =
-	'https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar'
-
 const Localoptions = {
 	args: [],
 	executablePath: exePath,
 	headless: true,
 }
-await chromium.font(
-	'https://raw.githack.com/dev-protocol/stackroom/main/fonts/IBM_Plex_Sans_JP/IBMPlexSansJP-Medium.ttf',
-)
-await chromium.font(
-	'https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf',
-)
 const serverOptions = {
 	args: chromium.args,
-	executablePath: await chromium.executablePath(chromiumPack),
+	executablePath: await chromium.executablePath(),
 	headless: true,
+	ignoreHTTPSErrors: true,
 }
 const puppeteerLifeCycleEvents = [
 	'load',
@@ -41,7 +33,7 @@ const puppeteerLifeCycleEvents = [
 export const handler: Handler = async (
 	event: APIGatewayEvent,
 ): Promise<APIGatewayProxyResult> => {
-	const url = new URL(event.path)
+	const url = new URL(event.path, 'http://localhost')
 	const { isDev, height, width, cacheControl, gotoThenWaitUntil } = {
 		isDev: url.searchParams.get('dev') === 'true',
 		height: url.searchParams.get('h'),

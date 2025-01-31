@@ -2,11 +2,16 @@ import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
+import packageJson from './package.json' with { type: 'json' }
 
 export default {
+	external: [
+		...Object.keys(packageJson.dependencies),
+		...Object.keys(packageJson.devDependencies),
+	],
 	input: 'src/index.ts',
 	output: {
-		dir: 'dist',
+		file: 'dist/index.js',
 		format: 'es',
 	},
 	plugins: [typescript(), commonjs(), nodeResolve(), json()],
