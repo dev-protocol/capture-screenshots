@@ -2,6 +2,7 @@
 import { type APIRoute } from 'astro'
 import chromium from '@sparticuz/chromium-min'
 import { Chromium } from '../../libs/chromium.ts'
+import type { PuppeteerLifeCycleEvent } from 'puppeteer-core'
 
 const exePath =
 	process.platform === 'win32'
@@ -18,18 +19,31 @@ const Localoptions = {
 	executablePath: exePath,
 	headless: true,
 }
+await chromium.font(
+	'https://raw.githack.com/dev-protocol/stackroom/main/fonts/IBM_Plex_Sans_JP/IBMPlexSansJP-Medium.ttf',
+)
+await chromium.font(
+	'https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf',
+)
 const serverOptions = {
 	args: chromium.args,
 	executablePath: await chromium.executablePath(chromiumPack),
 	headless: true,
 }
+const puppeteerLifeCycleEvents = [
+	'load',
+	'domcontentloaded',
+	'networkidle0',
+	'networkidle2',
+] satisfies PuppeteerLifeCycleEvent[]
 
 export const GET: APIRoute = async ({ url }) => {
-	const { isDev, height, width, cacheControl } = {
+	const { isDev, height, width, cacheControl, gotoThenWaitUntil } = {
 		isDev: url.searchParams.get('dev') === 'true',
 		height: url.searchParams.get('h'),
 		width: url.searchParams.get('w'),
 		cacheControl: url.searchParams.get('cache-control'),
+		gotoThenWaitUntil: url.searchParams.get('goto-then-waituntil'),
 	}
 	const options = isDev ? Localoptions : serverOptions
 
@@ -56,8 +70,21 @@ export const GET: APIRoute = async ({ url }) => {
 			deviceScaleFactor: 1,
 		})
 
+		await page.setRequestInterception(true)
+
+		// eslint-disable-next-line functional/no-return-void
+		page.on('request', (req) => {
+			// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+			req.url().includes('capture.clubs.place') ? req.abort() : req.continue()
+		})
+
 		// tell the page to visit the url
-		await page.goto(targetUrl)
+		const waitUntil: PuppeteerLifeCycleEvent =
+			gotoThenWaitUntil &&
+			puppeteerLifeCycleEvents.some((x) => x === gotoThenWaitUntil)
+				? (gotoThenWaitUntil as PuppeteerLifeCycleEvent)
+				: ('networkidle2' as PuppeteerLifeCycleEvent)
+		await page.goto(targetUrl, { waitUntil, timeout: 0 })
 
 		// take a screenshot
 		const file = await page.screenshot({
