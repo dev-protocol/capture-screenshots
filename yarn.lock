@@ -1816,15 +1816,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:0.30.2":
-  version: 0.30.2
-  resolution: "@types/ramda@npm:0.30.2"
-  dependencies:
-    types-ramda: "npm:^0.30.1"
-  checksum: 10c0/dda95008860f594eb7b4fd9819adeb2dcd4d4e2baca6cb33f692f6f8ea76d04a7fd81f9a057c5c67555612769e5592cb15f91de6c9f8b619b8b1d806d19dc9ea
-  languageName: node
-  linkType: hard
-
 "@types/unist@npm:*, @types/unist@npm:^3.0.0":
   version: 3.0.3
   resolution: "@types/unist@npm:3.0.3"
@@ -6384,13 +6375,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:0.30.1":
-  version: 0.30.1
-  resolution: "ramda@npm:0.30.1"
-  checksum: 10c0/3ea3e35c80e1a1b78c23de0c72d3382c3446f42052b113b851f1b7fc421e33a45ce92e7aef3c705cc6de3812a209d03417af5c264f67126cda539fd66c8bea71
-  languageName: node
-  linkType: hard
-
 "ramda@npm:^0.29.0":
   version: 0.29.1
   resolution: "ramda@npm:0.29.1"
@@ -7296,7 +7280,6 @@ __metadata:
     "@types/eslint-config-prettier": "npm:^6.11.3"
     "@types/eslint__js": "npm:^8.42.3"
     "@types/node": "npm:22.7.9"
-    "@types/ramda": "npm:0.30.2"
     astro: "npm:5.1.10"
     astro-aws-amplify: "npm:^0.1.0"
     dotenv: "npm:16.4.5"
@@ -7307,7 +7290,6 @@ __metadata:
     husky: "npm:9.1.6"
     prettier: "npm:3.3.3"
     puppeteer-core: "npm:23.6.0"
-    ramda: "npm:0.30.1"
     rimraf: "npm:6.0.1"
     typescript: "npm:5.6.3"
     typescript-eslint: "npm:^8.9.0"
@@ -7444,13 +7426,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-toolbelt@npm:^9.6.0":
-  version: 9.6.0
-  resolution: "ts-toolbelt@npm:9.6.0"
-  checksum: 10c0/838f9a2f0fe881d5065257a23b402c41315b33ff987b73db3e2b39fcb70640c4c7220e1ef118ed5676763543724fdbf4eda7b0e2c17acb667ed1401336af9f8c
-  languageName: node
-  linkType: hard
-
 "tsconfck@npm:^3.1.4":
   version: 3.1.4
   resolution: "tsconfck@npm:3.1.4"
@@ -7499,15 +7474,6 @@ __metadata:
   version: 2.12.0
   resolution: "typed-query-selector@npm:2.12.0"
   checksum: 10c0/069509887ecfff824a470f5f93d300cc9223cb059a36c47ac685f2812c4c9470340e07615893765e4264cef1678507532fa78f642fd52f276b589f7f5d791f79
-  languageName: node
-  linkType: hard
-
-"types-ramda@npm:^0.30.1":
-  version: 0.30.1
-  resolution: "types-ramda@npm:0.30.1"
-  dependencies:
-    ts-toolbelt: "npm:^9.6.0"
-  checksum: 10c0/4a8b230ae9772e6534f65b1a154dd5604bcd1d74e27b49686337a215e83aa8fc93e49f8c49af395418d2950cb9fb9b900662077c1d4b73ff6fe4f4bcb83ab2d6
   languageName: node
   linkType: hard
 
