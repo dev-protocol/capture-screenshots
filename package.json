@@ -17,7 +17,6 @@
 	"license": "MPL-2.0",
 	"dependencies": {
 		"@astrojs/netlify": "^6.1.0",
-		"@astrojs/vercel": "8.0.4",
 		"@devprotocol/util-ts": "^4.0.0",
 		"@sparticuz/chromium-min": "^130.0.0",
 		"astro": "5.1.10",

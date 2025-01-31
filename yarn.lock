@@ -29,7 +29,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@astrojs/internal-helpers@npm:0.4.2, @astrojs/internal-helpers@npm:^0.4.2":
+"@astrojs/internal-helpers@npm:0.4.2":
   version: 0.4.2
   resolution: "@astrojs/internal-helpers@npm:0.4.2"
   checksum: 10c0/881e345f587e0cd05a94a44a6b5aa4e104b67584dc65c21e139668661572add8bbcfad1ae02fe38d1189f553f203c0fcb15da79032cc4e973eabac704c041b19
@@ -157,22 +157,6 @@ __metadata:
   version: 0.6.0
   resolution: "@astrojs/underscore-redirects@npm:0.6.0"
   checksum: 10c0/fe1895e3a6fa38b246bd9b793b203e590ee52fc426892802cfcd8e1d7d3ef181c919412f664de946ef940b6d0c758473c45997d0cb60cfaf3c95a5e086d1ad3e
-  languageName: node
-  linkType: hard
-
-"@astrojs/vercel@npm:8.0.4":
-  version: 8.0.4
-  resolution: "@astrojs/vercel@npm:8.0.4"
-  dependencies:
-    "@astrojs/internal-helpers": "npm:^0.4.2"
-    "@vercel/analytics": "npm:^1.4.1"
-    "@vercel/edge": "npm:^1.2.1"
-    "@vercel/nft": "npm:^0.29.0"
-    esbuild: "npm:^0.24.0"
-    fast-glob: "npm:^3.3.3"
-  peerDependencies:
-    astro: ^5.0.0
-  checksum: 10c0/00a603c84f0f15fdbafede3436cb79134808aa3b6e257e33b3a10b61048942d65817b65b98ece085052e8aebb9a568f73df38a7e1c072b0cf80453d12e93c258
   languageName: node
   linkType: hard
 
@@ -2096,43 +2080,6 @@ __metadata:
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
   checksum: 10c0/8209c937cb39119f44eb63cf90c0b73e7c754209a6411c707be08e50e29ee81356dca1a848a405c8bdeebfe2f5e4f831ad310ae1689eeef65e7445c090c6657d
-  languageName: node
-  linkType: hard
-
-"@vercel/analytics@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "@vercel/analytics@npm:1.4.1"
-  peerDependencies:
-    "@remix-run/react": ^2
-    "@sveltejs/kit": ^1 || ^2
-    next: ">= 13"
-    react: ^18 || ^19 || ^19.0.0-rc
-    svelte: ">= 4"
-    vue: ^3
-    vue-router: ^4
-  peerDependenciesMeta:
-    "@remix-run/react":
-      optional: true
-    "@sveltejs/kit":
-      optional: true
-    next:
-      optional: true
-    react:
-      optional: true
-    svelte:
-      optional: true
-    vue:
-      optional: true
-    vue-router:
-      optional: true
-  checksum: 10c0/e79bb0bdf52c0fcdb78fcaec8c0bb827d926e6cce5e72277d86e1a030bf529a04ae2c0f5d679d910358970fa1dc7b086926305560732c201e0b8b12bfee822f9
-  languageName: node
-  linkType: hard
-
-"@vercel/edge@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@vercel/edge@npm:1.2.1"
-  checksum: 10c0/ace3cc730a8d8fd37b2849d2b5240adbf1d888f4af9332082adc5cc63e3df109aca2dbc0db30a1fe79b1812946d27a03c4008edaee9d860226c1f1048444d966
   languageName: node
   linkType: hard
 
@@ -7288,7 +7235,6 @@ __metadata:
   resolution: "template-repos-ts@workspace:."
   dependencies:
     "@astrojs/netlify": "npm:^6.1.0"
-    "@astrojs/vercel": "npm:8.0.4"
     "@devprotocol/util-ts": "npm:^4.0.0"
     "@eslint/js": "npm:^9.12.0"
     "@sparticuz/chromium-min": "npm:^130.0.0"
