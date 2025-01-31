@@ -1,7 +1,8 @@
 /* eslint-disable functional/no-expression-statements */
-import { type APIRoute } from 'astro'
+import type { Handler } from 'aws-lambda'
+import type { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda'
 import chromium from '@sparticuz/chromium-min'
-import { Chromium } from '../../libs/chromium.ts'
+import { Chromium } from './libs/chromium.js'
 import type { PuppeteerLifeCycleEvent } from 'puppeteer-core'
 
 const exePath =
@@ -37,7 +38,10 @@ const puppeteerLifeCycleEvents = [
 	'networkidle2',
 ] satisfies PuppeteerLifeCycleEvent[]
 
-export const GET: APIRoute = async ({ url }) => {
+export const handler: Handler = async (
+	event: APIGatewayEvent,
+): Promise<APIGatewayProxyResult> => {
+	const url = new URL(event.path)
 	const { isDev, height, width, cacheControl, gotoThenWaitUntil } = {
 		isDev: url.searchParams.get('dev') === 'true',
 		height: url.searchParams.get('h'),
@@ -52,12 +56,12 @@ export const GET: APIRoute = async ({ url }) => {
 		const targetUrl = url.searchParams.get('src')
 
 		if (!targetUrl) {
-			return new Response('URL query parameter is required', { status: 400 })
+			return { statusCode: 404, body: 'URL query parameter is required' }
 		}
 
 		// Validate that the URL starts with http or https
 		if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
-			return new Response('Invalid URL format', { status: 400 })
+			return { statusCode: 400, body: 'Invalid URL format' }
 		}
 
 		const browser = await Chromium.getInstance(options)
@@ -96,16 +100,20 @@ export const GET: APIRoute = async ({ url }) => {
 		// await browser.close()
 
 		// Return the PNG image as the response
-		return new Response(file, {
-			status: 200,
+		return {
+			statusCode: 200,
+			body: Buffer.from(file).toString('base64'),
 			headers: {
 				'Content-Type': 'image/png',
 				'access-control-allow-origin': '*',
 				'cache-control': cacheControl ?? `public, max-age=31536000`,
 			},
-		})
+		} satisfies APIGatewayProxyResult
 	} catch (error) {
 		console.error('Error capturing screenshot:', error)
-		return new Response('Internal Server Error', { status: 500 })
+		return {
+			statusCode: 500,
+			body: 'Internal Server Error',
+		}
 	}
 }
