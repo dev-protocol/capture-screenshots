@@ -108,3 +108,6 @@ package-lock.json
 
 # astro
 **/.astro
+
+# amplify
+.amplify-hosting

@@ -3,11 +3,12 @@ import { defineConfig } from 'astro/config'
 
 import vercel from '@astrojs/vercel/serverless'
 import netlify from '@astrojs/netlify/functions'
+import awsAmplify from 'astro-aws-amplify'
 
 // https://astro.build/config
 export default defineConfig({
 	output: 'server',
 	adapter: process.env.NETLIFY
 		? netlify({ edgeMiddleware: false })
-		: vercel({ maxDuration: 300 }),
+		: awsAmplify(),
 })
