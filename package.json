@@ -21,6 +21,7 @@
 		"@devprotocol/util-ts": "^4.0.0",
 		"@sparticuz/chromium-min": "^130.0.0",
 		"astro": "5.1.10",
+		"astro-aws-amplify": "^0.1.0",
 		"puppeteer-core": "23.6.0",
 		"ramda": "0.30.1"
 	},
