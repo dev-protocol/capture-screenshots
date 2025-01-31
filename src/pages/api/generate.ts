@@ -26,7 +26,7 @@ await chromium.font(
 	'https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf',
 )
 const serverOptions = {
-	args: chromium.args,
+	args: [...chromium.args, '--disable-features=site-per-process'],
 	executablePath: await chromium.executablePath(chromiumPack),
 	headless: true,
 }
