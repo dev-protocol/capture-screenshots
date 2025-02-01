@@ -1,14 +1,40 @@
-name: Build
+name: Release
 
-on: [push, pull_request]
+on:
+  workflow_run:
+    workflows: ['Check']
+    branches: [main]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  build:
+  release-please:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 1
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          release-type: simple
+
+  upload-artifact:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    timeout-minutes: 5
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -22,8 +48,44 @@ jobs:
           corepack enable
           yarn
 
-      - name: lint
-        run: yarn lint
+      - name: Build `lambda` function
+        run: |
+          yarn build
+          echo '{"type": "module"}' > dist/package.json
+          zip -rj lambda.zip dist
 
-      - name: test
-        run: yarn test
+      - name: Build `chromium` layer
+        run: |
+          mkdir work-chromium
+          cd work-chromium
+          git clone --depth=1 https://github.com/sparticuz/chromium.git
+          cd chromium
+          make chromium.zip
+          mv chromium.zip ../../
+
+      - name: Build `libs` layer
+        run: |
+          mkdir nodejs
+          rm -rf node_modules
+          yarn workspaces focus --production
+          cp -r node_modules nodejs
+          zip -r libs.zip nodejs
+
+      - name: Build `fonts` layer
+        run: |
+          mkdir work-fonts
+          cd work-fonts
+          git clone --depth=1 git@github.com:dev-protocol/stackroom.git
+          cd stackroom/fonts
+          mv IBM_Plex_Sans_JP/* ./
+          rm -rf IBM_Plex_Sans_JP
+          mv Noto_Color_Emoji/* ./
+          rm -rf Noto_Color_Emoji
+          cd ../
+          zip -r fonts.zip fonts
+          mv fonts.zip ../../
+
+      - name: Upload Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release-please.outputs.tag_name }} lambda.zip chromium.zip libs.zip fonts.zip
