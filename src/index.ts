@@ -30,22 +30,23 @@ const puppeteerLifeCycleEvents = [
 	'networkidle2',
 ] satisfies PuppeteerLifeCycleEvent[]
 
-export const handler: Handler = async (
-	event: APIGatewayEvent,
-): Promise<APIGatewayProxyResult> => {
-	const url = new URL(event.path, 'http://localhost')
+export const handler: Handler = async ({
+	queryStringParameters,
+}: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+	console.log('queryStringParameters', queryStringParameters)
+	const params = { ...queryStringParameters }
 	const { isDev, height, width, cacheControl, gotoThenWaitUntil } = {
-		isDev: url.searchParams.get('dev') === 'true',
-		height: url.searchParams.get('h'),
-		width: url.searchParams.get('w'),
-		cacheControl: url.searchParams.get('cache-control'),
-		gotoThenWaitUntil: url.searchParams.get('goto-then-waituntil'),
+		isDev: params['dev'] === 'true',
+		height: params['h'],
+		width: params['w'],
+		cacheControl: params['cache-control'],
+		gotoThenWaitUntil: params['goto-then-waituntil'],
 	}
 	const options = isDev ? Localoptions : serverOptions
 
 	try {
 		// Extract the "target" query parameter (the URL to capture)
-		const targetUrl = url.searchParams.get('src')
+		const targetUrl = params['src']
 
 		if (!targetUrl) {
 			return { statusCode: 404, body: 'URL query parameter is required' }
@@ -100,6 +101,7 @@ export const handler: Handler = async (
 				'access-control-allow-origin': '*',
 				'cache-control': cacheControl ?? `public, max-age=31536000`,
 			},
+			isBase64Encoded: true,
 		} satisfies APIGatewayProxyResult
 	} catch (error) {
 		console.error('Error capturing screenshot:', error)
