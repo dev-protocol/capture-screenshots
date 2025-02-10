@@ -1,4 +1,4 @@
-import type { Browser, PuppeteerLaunchOptions } from 'puppeteer-core'
+import type { Browser, LaunchOptions } from 'puppeteer-core'
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 
@@ -6,16 +6,16 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 puppeteer.use(StealthPlugin())
 
 export const Chromium = (() => {
-	const instances: WeakMap<PuppeteerLaunchOptions, Browser> = new WeakMap()
+	const instances: WeakMap<LaunchOptions, Browser> = new WeakMap()
 
-	const createInstance = (options: PuppeteerLaunchOptions) => {
+	const createInstance = (options: LaunchOptions) => {
 		// eslint-disable-next-line functional/no-expression-statements
 		console.log('&&&&&', 'new chromium instanse will be created')
 		return puppeteer.launch(options)
 	}
 
 	return {
-		getInstance: async (options: PuppeteerLaunchOptions) => {
+		getInstance: async (options: LaunchOptions) => {
 			const fromCache = instances.get(options)
 			const instance = fromCache
 				? fromCache
