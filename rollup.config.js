@@ -2,7 +2,8 @@ import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
-import packageJson from './package.json'
+import { readFileSync } from 'node:fs'
+const packageJson = JSON.parse(readFileSync('./package.json'))
 
 export default {
 	external: [
