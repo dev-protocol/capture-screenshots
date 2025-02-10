@@ -8,6 +8,12 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  ZIP_LAMBDA: lambda-${{github.event.release.tag_name}}.zip
+  ZIP_CHROMIUM: chromium-${{github.event.release.tag_name}}.zip
+  ZIP_LIBS: libs-${{github.event.release.tag_name}}.zip
+  ZIP_FONTS: fonts-${{github.event.release.tag_name}}.zip
+
 jobs:
   upload-artifact:
     runs-on: ubuntu-latest
@@ -32,7 +38,7 @@ jobs:
         run: |
           yarn build
           echo '{"type": "module"}' > dist/package.json
-          zip -rj lambda.zip dist
+          zip -rj ${{env.ZIP_LAMBDA}} dist
 
       - name: Build `chromium` layer
         run: |
@@ -40,8 +46,8 @@ jobs:
           cd work-chromium
           git clone --depth=1 https://github.com/sparticuz/chromium.git
           cd chromium
-          make chromium.zip
-          mv chromium.zip ../../
+          make ${{env.ZIP_CHROMIUM}}
+          mv ${{env.ZIP_CHROMIUM}} ../../
 
       - name: Build `libs` layer
         run: |
@@ -49,7 +55,7 @@ jobs:
           rm -rf node_modules
           yarn workspaces focus --production
           cp -r node_modules nodejs
-          zip -r libs.zip nodejs
+          zip -r ${{env.ZIP_LIBS}} nodejs
 
       - name: Build `fonts` layer
         run: |
@@ -62,10 +68,10 @@ jobs:
           mv Noto_Color_Emoji/* ./
           rm -rf Noto_Color_Emoji
           cd ../
-          zip -r fonts.zip fonts
-          mv fonts.zip ../../
+          zip -r ${{env.ZIP_FONTS}} fonts
+          mv ${{env.ZIP_FONTS}} ../../
 
       - name: Upload Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} lambda.zip chromium.zip libs.zip fonts.zip
+        run: gh release upload ${{ github.event.release.tag_name }} ${{env.ZIP_LAMBDA}} ${{env.ZIP_CHROMIUM}} ${{env.ZIP_LIBS}} ${{env.ZIP_FONTS}}
