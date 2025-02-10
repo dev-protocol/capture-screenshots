@@ -5,15 +5,6 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@devprotocol/util-ts@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@devprotocol/util-ts@npm:4.0.0"
-  dependencies:
-    ramda: "npm:^0.29.0"
-  checksum: 10c0/8df1c6c6c4ba470b55ad88953e1ef6b8d81b52b13439d2ac03942ab3e2f55ef86471f5c13778230b5c2c7f6c3976c9af5e87cd70807c41288e3f4e8900466d67
-  languageName: node
-  linkType: hard
-
 "@eslint-community/eslint-utils@npm:^4.2.0, @eslint-community/eslint-utils@npm:^4.4.0":
   version: 4.4.0
   resolution: "@eslint-community/eslint-utils@npm:4.4.0"
@@ -943,7 +934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-lambda@npm:^1.0.7":
+"aws-lambda@npm:1.0.7":
   version: 1.0.7
   resolution: "aws-lambda@npm:1.0.7"
   dependencies:
@@ -3235,13 +3226,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.29.0":
-  version: 0.29.1
-  resolution: "ramda@npm:0.29.1"
-  checksum: 10c0/5de53a07400959c1a704c366ec52b1b8cd9a444dc1f9cdf17d607e0b9eeaa38cbaea309d43e59dbd7f36731ba977a64d40092555c0e7c2d4a41e8e922239c0ba
-  languageName: node
-  linkType: hard
-
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -3720,7 +3704,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "template-repos-ts@workspace:."
   dependencies:
-    "@devprotocol/util-ts": "npm:^4.0.0"
     "@eslint/js": "npm:^9.12.0"
     "@rollup/plugin-commonjs": "npm:^28.0.2"
     "@rollup/plugin-json": "npm:^6.1.0"
@@ -3732,7 +3715,7 @@ __metadata:
     "@types/eslint-config-prettier": "npm:^6.11.3"
     "@types/eslint__js": "npm:^8.42.3"
     "@types/node": "npm:22.7.9"
-    aws-lambda: "npm:^1.0.7"
+    aws-lambda: "npm:1.0.7"
     dotenv: "npm:16.4.5"
     eslint: "npm:^9.12.0"
     eslint-config-prettier: "npm:^9.1.0"
