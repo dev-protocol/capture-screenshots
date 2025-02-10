@@ -63,7 +63,7 @@ jobs:
           cd work-fonts
           git clone --depth=1 https://github.com/dev-protocol/stackroom.git
           cd stackroom/fonts
-          mv IBM_Plex_Sans_JP/* ./
+          mv IBM_Plex_Sans_JP/IBMPlexSansJP-Bold.ttf ./
           rm -rf IBM_Plex_Sans_JP
           mv Noto_Color_Emoji/* ./
           rm -rf Noto_Color_Emoji
