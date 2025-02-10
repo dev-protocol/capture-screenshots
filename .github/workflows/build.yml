@@ -55,7 +55,7 @@ jobs:
         run: |
           mkdir work-fonts
           cd work-fonts
-          git clone --depth=1 git@github.com:dev-protocol/stackroom.git
+          git clone --depth=1 https://github.com/dev-protocol/stackroom.git
           cd stackroom/fonts
           mv IBM_Plex_Sans_JP/* ./
           rm -rf IBM_Plex_Sans_JP
