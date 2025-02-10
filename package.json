@@ -1,6 +1,6 @@
 {
 	"name": "template-repos-ts",
-	"version": "2.1.2",
+	"version": "2.1.3",
 	"description": "Template repository for using TypeScript",
 	"type": "module",
 	"scripts": {
