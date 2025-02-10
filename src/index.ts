@@ -60,14 +60,15 @@ export const handler: Handler = async ({
 		const browser = await Chromium.getInstance(options)
 		const page = await browser.newPage()
 
-		// set the viewport size
-		await page.setViewport({
-			width: width ? Math.abs(parseInt(width)) : 1920,
-			height: height ? Math.abs(parseInt(height)) : 1080,
-			deviceScaleFactor: 1,
-		})
-
-		await page.setRequestInterception(true)
+		await Promise.all([
+			// set the viewport size
+			page.setViewport({
+				width: width ? Math.abs(parseInt(width)) : 1920,
+				height: height ? Math.abs(parseInt(height)) : 1080,
+				deviceScaleFactor: 1,
+			}),
+			page.setRequestInterception(true),
+		])
 
 		// eslint-disable-next-line functional/no-return-void
 		page.on('request', (req) => {

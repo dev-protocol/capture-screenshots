@@ -1,5 +1,9 @@
 import type { Browser, PuppeteerLaunchOptions } from 'puppeteer-core'
-import puppeteer from 'puppeteer-core'
+import puppeteer from 'puppeteer-extra'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+
+// eslint-disable-next-line functional/no-expression-statements
+puppeteer.use(StealthPlugin())
 
 export const Chromium = (() => {
 	const instances: WeakMap<PuppeteerLaunchOptions, Browser> = new WeakMap()
