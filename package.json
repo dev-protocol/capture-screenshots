@@ -15,6 +15,7 @@
 	"license": "MPL-2.0",
 	"dependencies": {
 		"@sparticuz/chromium": "^132.0.0",
+		"puppeteer-core": "^24.2.0",
 		"puppeteer-extra": "^3.3.6",
 		"puppeteer-extra-plugin-stealth": "^2.11.2"
 	},
@@ -37,7 +38,6 @@
 		"globals": "^15.11.0",
 		"husky": "9.1.6",
 		"prettier": "3.3.3",
-		"puppeteer-core": "^24.2.0",
 		"rimraf": "6.0.1",
 		"rollup": "^4.32.1",
 		"typescript": "5.6.3",
