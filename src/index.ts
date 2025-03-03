@@ -37,7 +37,7 @@ type APIGatewayEvent = Omit<APIGatewayProxyEvent, 'requestContext'> & {
 }
 
 const U = undefined
-const EXP = /\/.+\/([0-9]+)\/([0-9]+)\/(.+)/
+const EXP = /\/.+\/@\/([0-9]+)\/([0-9]+)\/(.+)/
 
 export const handler: Handler = async ({
 	queryStringParameters,
