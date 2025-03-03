@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-expression-statements */
 import type { Handler } from 'aws-lambda'
-import type { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda'
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import chromium from '@sparticuz/chromium'
 import { Chromium } from './libs/chromium.js'
 import type { PuppeteerLifeCycleEvent } from 'puppeteer-core'
@@ -30,15 +30,41 @@ const puppeteerLifeCycleEvents = [
 	'networkidle2',
 ] satisfies PuppeteerLifeCycleEvent[]
 
+type APIGatewayEvent = Omit<APIGatewayProxyEvent, 'requestContext'> & {
+	requestContext: APIGatewayProxyEvent['requestContext'] & {
+		http?: { path?: string }
+	}
+}
+
+const U = undefined
+const EXP = /\/.+\/with\/([0-9]+)\/([0-9]+)\/(.+)/
+
 export const handler: Handler = async ({
 	queryStringParameters,
+	requestContext,
 }: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
 	console.log('queryStringParameters', queryStringParameters)
+	const path = requestContext.http?.path
+	const pathParams = path
+		? ((arg) =>
+				arg
+					? {
+							w: arg[1],
+							h: arg[2],
+							src: decodeURIComponent(arg[3]).replace(
+								/^(http)(s?):\/\/?/,
+								'$1$2://',
+							),
+						}
+					: U)(path.match(EXP))
+		: U
+	console.log('pathParams', pathParams)
 	const params = { ...queryStringParameters }
-	const { isDev, height, width, cacheControl, gotoThenWaitUntil } = {
+	const { isDev, height, width, src, cacheControl, gotoThenWaitUntil } = {
 		isDev: params['dev'] === 'true',
-		height: params['h'],
-		width: params['w'],
+		height: pathParams?.h ?? params['h'],
+		width: pathParams?.w ?? params['w'],
+		src: pathParams?.src ?? params['src'],
 		cacheControl: params['cache-control'],
 		gotoThenWaitUntil: params['goto-then-waituntil'],
 	}
@@ -46,7 +72,7 @@ export const handler: Handler = async ({
 
 	try {
 		// Extract the "target" query parameter (the URL to capture)
-		const targetUrl = params['src']
+		const targetUrl = src
 
 		if (!targetUrl) {
 			return { statusCode: 404, body: 'URL query parameter is required' }
