@@ -1324,10 +1324,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:*, dotenv@npm:16.4.5":
+"dotenv@npm:*":
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 10c0/48d92870076832af0418b13acd6e5a5a3e83bb00df690d9812e94b24aff62b88ade955ac99a05501305b8dc8f1b0ee7638b18493deb6fe93d680e5220936292f
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:16.6.1":
+  version: 16.6.1
+  resolution: "dotenv@npm:16.6.1"
+  checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
   languageName: node
   linkType: hard
 
@@ -3660,7 +3667,7 @@ __metadata:
     "@types/eslint__js": "npm:^8.42.3"
     "@types/node": "npm:22.7.9"
     aws-lambda: "npm:1.0.7"
-    dotenv: "npm:16.4.5"
+    dotenv: "npm:16.6.1"
     eslint: "npm:^9.12.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-functional: "npm:^7.0.2"
